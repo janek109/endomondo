@@ -146,6 +146,11 @@ php bin/console endomondo:migrate --code= ;tput bel;
     Create endomondo file: 934431839
     Check upload latter UploadId: 4596865482
     ```
+    ```
+    [429] Client error: `POST https://www.strava.com/api/v3/uploads` resulted in a `429 Too Many Requests` response:
+    {"message":"Rate Limit Exceeded","errors":[{"resource":"Application","field":"rate limit","code":"exceeded"}]}
+     for workoutId: 999497603 Start: 2017-09-10 10:36:25 End: 2017-09-10 10:41:13
+    ```
 2. Migrate by endomondo ids like 
     ```
     php bin/console endomondo:migrateById --code|--token --ids=1,2,3,4,5,6,7
