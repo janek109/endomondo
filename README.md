@@ -51,7 +51,7 @@ php bin/console endomondo:migrate --token=[token]
 Count number of workouts in endomondo
 
 ```
-php bin/console endomondo:count-workouts
+php bin/console endomondo:countWorkouts
 ```
 
 Get access token form code

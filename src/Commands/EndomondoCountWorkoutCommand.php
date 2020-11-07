@@ -18,7 +18,7 @@ class EndomondoCountWorkoutCommand extends Command
 {
     private const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    protected static $defaultName = 'endomondo:count-workouts';
+    protected static $defaultName = 'endomondo:countWorkouts';
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
