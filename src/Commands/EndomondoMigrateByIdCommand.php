@@ -23,7 +23,7 @@ class EndomondoMigrateByIdCommand extends Command
     // TODO mv to one file
     private const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    protected static $defaultName = 'endomondo:migrate';
+    protected static $defaultName = 'endomondo:migrateById';
 
     protected function configure()
     {
@@ -33,23 +33,23 @@ class EndomondoMigrateByIdCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $code = $input->getOption('code');
-        $token = $input->getOption('token');
-
-        /** @var $endomondoApi EndomondoApi */
-        [$endomondoApi, $stravaApi, $config, $account] = ClientsFactory::createApiClients($code, $token);
-
-        $migrationService = new MigrationService($output, new UploadsApi(new Client(), $config), $stravaApi);
-
-            $endomondoWorkouts = $endomondoApi->getWorkoutsFromTo($from, $to); // get by Id
-
-            foreach ($endomondoWorkouts['workouts'] as $endomondoWorkout) {
-                $result = $migrationService->migrateOneWorkout($endomondoWorkout);
-
-                if ($result === Command::FAILURE) {
-                    return $result;
-                }
-            }
+//        $code = $input->getOption('code');
+//        $token = $input->getOption('token');
+//
+//        /** @var $endomondoApi EndomondoApi */
+//        [$endomondoApi, $stravaApi, $config, $account] = ClientsFactory::createApiClients($code, $token);
+//
+//        $migrationService = new MigrationService($output, new UploadsApi(new Client(), $config), $stravaApi);
+//
+//            $endomondoWorkouts = $endomondoApi->getWorkoutsFromTo($from, $to); // get by Id
+//
+//            foreach ($endomondoWorkouts['workouts'] as $endomondoWorkout) {
+//                $result = $migrationService->migrateOneWorkout($endomondoWorkout);
+//
+//                if ($result === Command::FAILURE) {
+//                    return $result;
+//                }
+//            }
 
         return Command::SUCCESS;
     }
