@@ -3,3 +3,5 @@ vendor
 workouts/*
 .idea
 .DS_Store
+
+!workouts/.gitkeep
