@@ -29,7 +29,8 @@ open that file and put data from endomondo and strava
 
 ### With this software you can:
 
-Migrate date form Date to Date form Endomondo to Strava
+Migrate workouts form date to date form Endomondo to Strava
+
 You should use that options because Strava api have limits:
 
 #### 100 requests every 15 minutes, 1000 daily
