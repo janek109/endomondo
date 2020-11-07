@@ -1,7 +1,5 @@
 .env
 vendor
-workouts/*
+workouts/*.gpx
 .idea
 .DS_Store
-
-!workouts/.gitkeep
