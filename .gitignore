@@ -1,0 +1,5 @@
+.env
+vendor
+workouts/*
+.idea
+.DS_Store

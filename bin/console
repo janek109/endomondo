@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use EndomondoMv\Commands\CheckSystemCommand;
+use EndomondoMv\Commands\EndomondoCountWorkoutCommand;
+use EndomondoMv\Commands\EndomondoMigrateByIdCommand;
+use EndomondoMv\Commands\EndomondoMigrateCommand;
+use EndomondoMv\Commands\StravaApiCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
+
+$application = new Application();
+
+$dotenv = new Dotenv();
+$dotenv->usePutenv(true);
+$dotenv->load(__DIR__.'/../.env');
+
+$application->add(new EndomondoMigrateCommand());
+$application->add(new EndomondoCountWorkoutCommand());
+$application->add(new StravaApiCommand());
+$application->add(new EndomondoMigrateByIdCommand());
+$application->add(new CheckSystemCommand());
+
+$application->run();
