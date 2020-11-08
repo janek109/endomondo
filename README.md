@@ -27,6 +27,11 @@
     ```
 open that file and put data from endomondo and strava
 
+### How to set password when you have account in endomondo connected with fb/google
+- Go to and reset password: https://www.endomondo.com/forgotpassword
+- Then you can add you endomondo password to .env file
+- Then you can use this tool
+
 ### With this software you can:
 
 Migrate workouts form date to date form Endomondo to Strava
@@ -100,11 +105,6 @@ Use tput bel to get notification wen your migration will be over
 ```
 php bin/console endomondo:migrate --code= ; tput bel;
 ```
-
-### How to set password when you have account in endomondo connected with fb/gogole
-- Go to and reset password: https://www.endomondo.com/forgotpassword
-- Then you can add you endomondo password to .env file
-- Then you can use this tool
 
 ### How to deal with errors and output instruction
 
