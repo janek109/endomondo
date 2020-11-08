@@ -88,9 +88,12 @@ class MigrationService
 
             if (!empty($upload->getActivityId())) {
                 $this->output->writeln('ActivityId: ' . $upload->getActivityId());
-            } else {
+            }
+
+            if (empty($upload->getActivityId()) && !empty($upload->getId()) && !strpos($upload['error'], 'duplicate of activity')) {
                 $this->output->writeln('Check upload latter UploadId: ' . $upload->getId());
             }
+
         } catch (Exception $e) {
             $this->output->writeln(
                 $e->getMessage() . ' for workoutId: ' . $endomondoWorkout->getId(
