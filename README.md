@@ -95,15 +95,21 @@ Then you can use --token param in migrator in case some error will occur
 
 ### Tips
 
-Use tput bel;
+Use tput bel to get notification wen your migration will be over
 
 ```
-php bin/console endomondo:migrate --code= ;tput bel;
+php bin/console endomondo:migrate --code= ; tput bel;
 ```
 
-### TODO
+### How to set password when you have account in endomondo connected with fb/gogole
+- Go to and reset password: https://www.endomondo.com/forgotpassword
+- Then you can add you endomondo password to .env file
+- Then you can use this tool
 
-1. how to deal with errors and output instruction
+### How to deal with errors and output instruction
+
+* see below
+
     ```
     Create endomondo file: 879597128
     Response from strava upload: 879597128.gpx duplicate of activity 4299975135
@@ -122,6 +128,7 @@ php bin/console endomondo:migrate --code= ;tput bel;
 
     endomondo:migrate [-c|--code CODE] [-t|--token TOKEN] [-s|--startImport STARTIMPORT] [-e|--endImport ENDIMPORT]
     ```
+* Start last period(startImport, endImport) again some temporary problem with endomondo api 
     ```
     In EndomondoApi.php line 61:
 
@@ -129,10 +136,12 @@ php bin/console endomondo:migrate --code= ;tput bel;
     Unauthorized` response:
     {"errors":[{"message":"Not Signed in: userId null","code":3,"type":5}]}
     ```
+* Start last period(startImport, endImport) again because endomondo api terminated you session 
     ```
     Create endomondo file: 739247438
     string(132) "The file is empty, <a href="https://strava.zendesk.com/entries/21823834-Uploading-Empty-Files" target="_blank">More Information</a>."
     ```
+* You need to upload this activity manually to Strava see https://www.strava.com/upload/select
     ```
     Create endomondo file: 486739785
     PHP Fatal error:  Uncaught Error: __clone method called on non-object in ...vendor/fabulator/endomondo-workouts/lib/Fabulator/Endomondo/Point.php:80
@@ -142,29 +151,34 @@ php bin/console endomondo:migrate --code= ;tput bel;
     #2 .../src/Migrate/Application/MigrationService.php(43): EndomondoMv\Migrate\Application\MigrationService->buildDescriptionFromEndomondoWorkout(Object(Fabulator\Endomondo\Workout))
     #3 .../src/Commands/EndomondoMigrateCommand.php(66): EndomondoMv\Migrate\Application\MigrationService->migrateOneWorkout(Object(Fabulator\Endomondo\Workout))
     #4 ...vendor/symfony/console/Command/Command.php(258): EndomondoMv\Commands\Endom in ...vendor/fabulator/endomondo-workouts/lib/Fabulator/Endomondo/Point.php on line 80
-
     ```
-    ```
-    Create endomondo file: 934431839
-    Check upload latter UploadId: 4596865482
-    ```
+* You need to upload this activity manually to Strava see https://www.strava.com/upload/select
     ```
     [429] Client error: `POST https://www.strava.com/api/v3/uploads` resulted in a `429 Too Many Requests` response:
     {"message":"Rate Limit Exceeded","errors":[{"resource":"Application","field":"rate limit","code":"exceeded"}]}
      for workoutId: 999497603 Start: 2017-09-10 10:36:25 End: 2017-09-10 10:41:13
     ```
-2. Migrate by endomondo ids like 
+* Nothing can do with this for today you exceeded Strava limits
+
+    ```
+    Create endomondo file: 934431839
+    Check upload latter UploadId: 4596865482
+    ```
+* TODO describe this ^
+
+### Endomondo Workouts folder
+see [workouts/README.md](workouts/README.md)
+
+### TODO
+
+1. Migrate by endomondo ids like 
     ```
     php bin/console endomondo:migrateById --code|--token --ids=1,2,3,4,5,6,7
     ```
-3. describe how to set password when you have account in endomondo connected with fb/gogole
-    - go to and reset password: https://www.endomondo.com/forgotpassword
-    - then you can use this tool
-4. how this work workouts folder
-5. how to setup app on https://www.strava.com/settings/api
-6. add option to not map trening type
-7. check upload later to update activity on strava
+2. how to set up app on https://www.strava.com/settings/api
+3. add option to not map trening type
+4. check upload later to update activity on strava
     ```
     php bin/console strava:checkUpload --code|--token --endomondoWorkoutId=[id] --stravaUploadId=[id]
     ```
-8. add configuration for workouts types mapping form endo to strava types
+5. add configuration for workouts types mapping form endo to strava types
