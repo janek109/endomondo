@@ -21,11 +21,23 @@
     ```
     php ./bin/console check
     ```
-- create file .env by copy example
+- To import data to strava you need to create api app see instruction bellow
+
+- Create file .env by copy example
     ```
     cp .env.example .env
     ```
-open that file and put data from endomondo and strava
+    open that file and put data from endomondo and strava
+
+- Then go to https://oauth.jszewczak.com/strava.php to create code
+
+- run
+    ```shell script
+    php bin/console strava:getToken --code=[secretcode]
+    ```
+    to get token
+
+- Then you can use token in `php bin/console endomondo:migrate`
 
 ### How to set password when you have account in endomondo connected with fb/google
 - Go to and reset password: https://www.endomondo.com/forgotpassword
