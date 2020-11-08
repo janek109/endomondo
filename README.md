@@ -158,7 +158,9 @@ php bin/console endomondo:migrate --code= ; tput bel;
     {"message":"Rate Limit Exceeded","errors":[{"resource":"Application","field":"rate limit","code":"exceeded"}]}
      for workoutId: 999497603 Start: 2017-09-10 10:36:25 End: 2017-09-10 10:41:13
     ```
-* Nothing can do with this for today you exceeded Strava limits
+* Check limits on https://www.strava.com/settings/api 
+    if exceeded 15min - Requests every 15 minutes you can try in next 15min
+    if exceeded 1000 request limit Daily requests you can try in next day
 
     ```
     Create endomondo file: 934431839
