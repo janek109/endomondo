@@ -32,6 +32,21 @@ open that file and put data from endomondo and strava
 - Then you can add you endomondo password to .env file
 - Then you can use this tool
 
+### How to set up api application on Strava
+
+1. Go to https://www.strava.com/settings/api
+
+2. Add an icon.
+
+    You can use one from this repo: [here](public_html/icons/data-transfer.png)
+
+2. Fill a form with this data: 
+
+    * Application Name: Move Endomondo workouts
+    * Category: Data Importer
+    * Website: https://oauth.jszewczak.com/
+    * Authorization Callback Domain: oauth.jszewczak.com
+
 ### With this software you can:
 
 Migrate workouts form date to date form Endomondo to Strava
@@ -177,7 +192,6 @@ see [workouts/README.md](workouts/README.md)
     ```
     php bin/console endomondo:migrateById --code|--token --ids=1,2,3,4,5,6,7
     ```
-2. how to set up app on https://www.strava.com/settings/api
 3. add option to not map trening type
 4. check upload later to update activity on strava
     ```
