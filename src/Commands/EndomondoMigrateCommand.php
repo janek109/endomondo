@@ -64,7 +64,7 @@ class EndomondoMigrateCommand extends Command
             $endomondoWorkouts = $endomondoApi->getWorkoutsFromTo($from, $to);
 
             foreach ($endomondoWorkouts['workouts'] as $endomondoWorkout) {
-                $result = $migrationService->migrateOneWorkout($endomondoWorkout);
+                $result = $migrationService->migrateWorkout($endomondoWorkout);
 
                 if ($result === Command::FAILURE) {
                     return $result;

@@ -106,8 +106,10 @@ php bin/console endomondo:migrate --code= ;tput bel;
 1. how to deal with errors and output instruction
     ```
     Create endomondo file: 879597128
-    879597128.gpx duplicate of activity 4299975135
+    Response from strava upload: 879597128.gpx duplicate of activity 4299975135
     ```
+* Migrator still update Activity in Strava - just ignore it
+   
     ```
     In RequestException.php line 113:
 

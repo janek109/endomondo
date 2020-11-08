@@ -43,7 +43,7 @@ class MigrationService
      * @param Workout $endomondoWorkout
      * @return int
      */
-    public function migrateOneWorkout($endomondoWorkout): int
+    public function migrateWorkout($endomondoWorkout): int
     {
         $pathToWorkoutFile = $this->createEndomondoWorkoutFileFromId($endomondoWorkout);
 
@@ -68,10 +68,12 @@ class MigrationService
             // TODO request do strava
 
             if (isset($upload['error'])) {
-                $this->output->writeln($upload['error']);
+                $this->output->writeln('Response from strava upload: ' . $upload['error']);
 
-                // to not end the whole process
-                return Command::SUCCESS;
+                if (!strpos($upload['error'], 'duplicate of activity')) {
+                    // to not end the whole process
+                    return Command::SUCCESS;
+                }
             }
 
             $this->stravaApi->put(
@@ -82,19 +84,20 @@ class MigrationService
             );
             // TODO request do strava
 
-            sleep(25); //30 - ok to not hit 15min api limit on strava
+            sleep(20); //25 - ok to not hit 15min api limit on strava
 
             if (!empty($upload->getActivityId())) {
                 $this->output->writeln('ActivityId: ' . $upload->getActivityId());
             } else {
                 $this->output->writeln('Check upload latter UploadId: ' . $upload->getId());
             }
-
         } catch (Exception $e) {
-            $this->output->writeln($e->getMessage() . ' for workoutId: ' . $endomondoWorkout->getId(
+            $this->output->writeln(
+                $e->getMessage() . ' for workoutId: ' . $endomondoWorkout->getId(
                 ) . ' Start: ' . $endomondoWorkout->getStart()->format(
                     self::DATE_FORMAT
-                ) . ' End: ' . $endomondoWorkout->getEnd()->format(self::DATE_FORMAT));
+                ) . ' End: ' . $endomondoWorkout->getEnd()->format(self::DATE_FORMAT)
+            );
 
             return Command::FAILURE;
         }
