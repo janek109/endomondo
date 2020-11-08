@@ -84,15 +84,18 @@ class MigrationService
             );
             // TODO request do strava
 
-            sleep(20); //25 - ok to not hit 15min api limit on strava
-
             if (!empty($upload->getActivityId())) {
                 $this->output->writeln('ActivityId: ' . $upload->getActivityId());
             }
 
-            if (empty($upload->getActivityId()) && !empty($upload->getId()) && !strpos($upload['error'], 'duplicate of activity')) {
+            if (empty($upload->getActivityId()) && !empty($upload->getId()) && isset($upload['error']) && !strpos(
+                    $upload['error'],
+                    'duplicate of activity'
+                )) {
                 $this->output->writeln('Check upload latter UploadId: ' . $upload->getId());
             }
+
+            sleep(20); //25 - ok to not hit 15min api limit on strava
 
         } catch (Exception $e) {
             $this->output->writeln(
