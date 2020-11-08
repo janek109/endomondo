@@ -31,12 +31,12 @@ class EndomondoMigrateCommand extends Command
         $this->addOption('token', 't', InputArgument::OPTIONAL, '');
 
         $this->addOption(
-            'startImport',
+            'startMigrate',
             's',
             InputArgument::OPTIONAL,
-            'start import date in format ' . self::DATE_FORMAT
+            'start migrate date in format ' . self::DATE_FORMAT
         );
-        $this->addOption('endImport', 'e', InputArgument::OPTIONAL, 'end import date in format' . self::DATE_FORMAT);
+        $this->addOption('endMigrate', 'e', InputArgument::OPTIONAL, 'end migrate date in format' . self::DATE_FORMAT);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,22 +44,22 @@ class EndomondoMigrateCommand extends Command
         $code = $input->getOption('code');
         $token = $input->getOption('token');
 
-        $startImport = $input->getOption('startImport');
-        $endImport = $input->getOption('endImport');
+        $startMigrate = $input->getOption('startMigrate');
+        $endMigrate = $input->getOption('endMigrate');
 
         /** @var $endomondoApi EndomondoApi */
         [$endomondoApi, $stravaApi, $config, $account] = ClientsFactory::createApiClients($code, $token);
 
         $migrationService = new MigrationService($output, new UploadsApi(new Client(), $config), $stravaApi);
 
-        if (!is_null($startImport)) {
-            list($from, $to, $endImport) = $this->createFromInput($startImport, $endImport);
+        if (!is_null($startMigrate)) {
+            list($from, $to, $endMigrate) = $this->createFromInput($startMigrate, $endMigrate);
         } else {
-            list($from, $to, $endImport) = $this->createFromToFromEndomondo($account, $output);
+            list($from, $to, $endMigrate) = $this->createFromToFromEndomondo($account, $output);
         }
 
-        while ($to <= $endImport && $from < $endImport) {
-            $output->writeln($from->format(self::DATE_FORMAT) . ' -> ' . $to->format(self::DATE_FORMAT) . ' end: ' . $endImport->format(self::DATE_FORMAT));
+        while ($to <= $endMigrate && $from < $endMigrate) {
+            $output->writeln($from->format(self::DATE_FORMAT) . ' -> ' . $to->format(self::DATE_FORMAT) . ' end: ' . $endMigrate->format(self::DATE_FORMAT));
 
             $endomondoWorkouts = $endomondoApi->getWorkoutsFromTo($from, $to);
 
@@ -72,10 +72,10 @@ class EndomondoMigrateCommand extends Command
             }
 
             $from->add(new DateInterval('P1MT1S'));
-            if ((clone $from)->add(new DateInterval('P1MT1S')) < $endImport) {
+            if ((clone $from)->add(new DateInterval('P1MT1S')) < $endMigrate) {
                 $to = (clone $from)->add(new DateInterval('P1M'));
             } else {
-                $to = $endImport;
+                $to = $endMigrate;
             }
         }
 
@@ -93,33 +93,33 @@ class EndomondoMigrateCommand extends Command
         // TODO mv to one service
 
         $from = new DateTime($account['created_date'], new DateTimeZone('UTC'));
-        $output->writeln('Import from: ' . $from->format(self::DATE_FORMAT));
+        $output->writeln('Migrate from: ' . $from->format(self::DATE_FORMAT));
 
         $to = (clone $from)->add(new DateInterval('P1M'));
 
-        $endImport = (new DateTime('now'))->add(new DateInterval('PT1H'));
-        $output->writeln('End Import on: ' . $endImport->format(self::DATE_FORMAT));
+        $endMigrate = (new DateTime('now'))->add(new DateInterval('PT1H'));
+        $output->writeln('End Migrate on: ' . $endMigrate->format(self::DATE_FORMAT));
 
-        return [$from, $to, $endImport];
+        return [$from, $to, $endMigrate];
     }
 
     /**
-     * @param $startImport
-     * @param $endImport
+     * @param $startMigrate
+     * @param $endMigrate
      * @return array
      */
-    private function createFromInput($startImport, $endImport): array
+    private function createFromInput($startMigrate, $endMigrate): array
     {
-        $from = DateTime::createFromFormat(self::DATE_FORMAT, $startImport, new DateTimeZone('UTC'));
-        $endImport = DateTime::createFromFormat(self::DATE_FORMAT, $endImport, new DateTimeZone('UTC'));
+        $from = DateTime::createFromFormat(self::DATE_FORMAT, $startMigrate, new DateTimeZone('UTC'));
+        $endMigrate = DateTime::createFromFormat(self::DATE_FORMAT, $endMigrate, new DateTimeZone('UTC'));
 
-        if ((clone $from)->add(new DateInterval('P1MT1S')) < $endImport) {
+        if ((clone $from)->add(new DateInterval('P1MT1S')) < $endMigrate) {
             $to = (clone $from)->add(new DateInterval('P1M'));
         } else {
-            $to = $endImport;
+            $to = $endMigrate;
         }
 
-        return [$from, $to, $endImport];
+        return [$from, $to, $endMigrate];
     }
 
 }

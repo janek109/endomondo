@@ -25,11 +25,11 @@ class EndomondoCountWorkoutCommand extends Command
         /** @var $endomondoApi EndomondoApi */
         [$endomondoApi, $account] = ClientsFactory::createEndomondoApiClient();
 
-        [$from, $to, $endImport] = $this->createFromToFromEndomondo($account, $output);
+        [$from, $to, $endMigrate] = $this->createFromToFromEndomondo($account, $output);
 
         $workoutCount = 0;
 
-        while ($to < $endImport) {
+        while ($to < $endMigrate) {
             $endomondoWorkouts = $endomondoApi->getWorkoutsFromTo($from, $to);
 
             $workoutCountInMonth = count($endomondoWorkouts['workouts']);
@@ -58,13 +58,13 @@ class EndomondoCountWorkoutCommand extends Command
         // TODO mv to one service
 
         $from = new DateTime($account['created_date'], new DateTimeZone('UTC'));
-        $output->writeln('Import from: ' . $from->format(self::DATE_FORMAT));
+        $output->writeln('Migrate from: ' . $from->format(self::DATE_FORMAT));
 
         $to = (clone $from)->add(new DateInterval('P1M'));
 
-        $endImport = (new DateTime('now'))->add(new DateInterval('P1M'));
-        $output->writeln('End Import on: ' . $endImport->format(self::DATE_FORMAT));
+        $endMigrate = (new DateTime('now'))->add(new DateInterval('P1M'));
+        $output->writeln('End Migrate on: ' . $endMigrate->format(self::DATE_FORMAT));
 
-        return array($from, $to, $endImport);
+        return array($from, $to, $endMigrate);
     }
 }

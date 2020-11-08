@@ -36,10 +36,10 @@ You should use that options because Strava api have limits:
 #### 100 requests every 15 minutes, 1000 daily
 
 ```
-php bin/console endomondo:migrate --code=[secretcode] --startImport='YYYY-MM-DD H:m:s' --endImport='YYYY-MM-DD H:m:s'
-php bin/console endomondo:migrate --token=[token] --startImport='YYYY-MM-DD H:m:s' --endImport='YYYY-MM-DD H:m:s'
-php bin/console endomondo:migrate --code=code --startImport='2016-11-01 00:00:01' --endImport='2017-01-01 00:00:00'
-php bin/console endomondo:migrate --token=token --startImport='2016-11-01 00:00:01' --endImport='2017-01-01 00:00:00'
+php bin/console endomondo:migrate --code=[secretcode] --startMigrate='YYYY-MM-DD H:m:s' --endMigrate='YYYY-MM-DD H:m:s'
+php bin/console endomondo:migrate --token=[token] --startMigrate='YYYY-MM-DD H:m:s' --endMigrate='YYYY-MM-DD H:m:s'
+php bin/console endomondo:migrate --code=code --startMigrate='2016-11-01 00:00:01' --endMigrate='2017-01-01 00:00:00'
+php bin/console endomondo:migrate --token=token --startMigrate='2016-11-01 00:00:01' --endMigrate='2017-01-01 00:00:00'
 ```
 
 Migrate all data form Endomondo to Strava
@@ -126,9 +126,9 @@ php bin/console endomondo:migrate --code= ; tput bel;
     Method: GET
     Parameters (truncated...)
 
-    endomondo:migrate [-c|--code CODE] [-t|--token TOKEN] [-s|--startImport STARTIMPORT] [-e|--endImport ENDIMPORT]
+    endomondo:migrate [-c|--code CODE] [-t|--token TOKEN] [-s|--startMigrate startMigrate] [-e|--endMigrate endMigrate]
     ```
-* Start last period(startImport, endImport) again some temporary problem with endomondo api 
+* Start last period(startMigrate, endMigrate) again some temporary problem with endomondo api 
     ```
     In EndomondoApi.php line 61:
 
@@ -136,7 +136,7 @@ php bin/console endomondo:migrate --code= ; tput bel;
     Unauthorized` response:
     {"errors":[{"message":"Not Signed in: userId null","code":3,"type":5}]}
     ```
-* Start last period(startImport, endImport) again because endomondo api terminated you session 
+* Start last period(startMigrate, endMigrate) again because endomondo api terminated you session 
     ```
     Create endomondo file: 739247438
     string(132) "The file is empty, <a href="https://strava.zendesk.com/entries/21823834-Uploading-Empty-Files" target="_blank">More Information</a>."
