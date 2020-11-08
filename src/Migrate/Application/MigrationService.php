@@ -85,7 +85,7 @@ class MigrationService
             // TODO request do strava
 
             if (!empty($upload->getActivityId())) {
-                $this->output->writeln('ActivityId: ' . $upload->getActivityId());
+                $this->output->writeln('Created activity Id: ' . $upload->getActivityId());
             }
 
             if (empty($upload->getActivityId()) && !empty($upload->getId()) && isset($upload['error']) && !strpos(
