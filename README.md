@@ -17,17 +17,16 @@
     ```
     composer install
     ```
-- run 
-    ```
-    php ./bin/console check
-    ```
-- To import data to strava you need to create api app see instruction bellow
-
 - Create file .env by copy example
     ```
     cp .env.example .env
     ```
     open that file and put data from endomondo and strava
+- run 
+    ```
+    php ./bin/console check
+    ```
+- To import data to strava you need to create api app see instruction bellow
 
 - Then go to https://oauth.jszewczak.com/strava.php to create code
 
